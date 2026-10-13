@@ -1,16 +1,16 @@
-# 🃏 Remi Cekih Edisi Pos Ronda (Visual UI & Custom Skin)
+#  Remi Cekih Edisi Pos Ronda (Visual UI & Custom Skin)
 
 Game kartu Remi Cekih tradisional Indonesia dengan **Tampilan Grafis Meja Modern**, 4 pemain (1 Pemain vs 3 Bot: Pak RT, Pak RW, Pak Sukardi), efek suara sintetis, animasi partikel kemenangan, dan **Sistem Toko Skin (Custom Meja, Kartu & Animasi)**.
 
 ---
 
-## 🚀 Cara Menjalankan Game Next.js (Sesuai Sketsa Meja)
+##  Cara Menjalankan Game Next.js (Sesuai Sketsa Meja)
 
 1. **Cara Cepat (Tinggal Klik 2x):**
    * Masuk ke folder **`D:\hilman-game`**.
    * Klik 2x file **`run_next.bat`** (atau `run_ui.bat`).
    * Sistem otomatis menjalankan Python Backend Server (Port 8000) dan Next.js Server (Port 3000), lalu membuka browser di:
-     👉 **`http://localhost:3000`**
+      **`http://localhost:3000`**
 
 2. **Atau Lewat Terminal / PowerShell:**
    * **Terminal 1 (Backend API):**
@@ -29,7 +29,7 @@ Game kartu Remi Cekih tradisional Indonesia dengan **Tampilan Grafis Meja Modern
 
 ---
 
-## 🎨 Fitur Toko Skin & Kustomisasi (Siap Monetisasi)
+##  Fitur Toko Skin & Kustomisasi (Siap Monetisasi)
 
 Klik tombol **🛒 Toko Skin Meja & Kartu** di kanan atas layar untuk mencoba gonta-ganti skin secara langsung (*real-time*):
 
@@ -55,12 +55,12 @@ Klik tombol **🛒 Toko Skin Meja & Kartu** di kanan atas layar untuk mencoba go
 
 ---
 
-## 🎮 Cara Bermain & Fitur Lengkap:
+##  Cara Bermain & Fitur Lengkap:
 1. **Timer Dua Fase (30 Detik Ambil + 30 Detik Buang):**
    * Fase 1: Kamu diberi **30 detik** untuk mengambil kartu (tarik kocokan atau serok buangan).
    * Fase 2: Setelah kartu terambil, timer di-reset ke **30 detik baru** untuk memilih kartu buang.
    * Auto-Discard cerdas: Jika waktu buang habis, sistem otomatis membuang kartu aman, dan **Joker 100% dilindungi** agar terhindar dari denda -250 poin.
-2. **Tombol 🚨 Gertak Cekih!:**
+2. **Tombol  Gertak Cekih!:**
    * Tombol merah untuk menggertak pemain sebelum Anda (Pak Sukardi).
    * Proyektil (batu/air/sandal) akan melayang terbang menabrak avatar Pak Sukardi dengan efek getaran layar dan balon dialog kaget dari Pak Sukardi.
 3. **Serok Buangan Fleksibel (Bisa 3, 4, 5, 6+ Kartu):**
@@ -71,13 +71,13 @@ Klik tombol **🛒 Toko Skin Meja & Kartu** di kanan atas layar untuk mencoba go
    * Jika kartu Anda sudah jadi dan Anda memilih **Cekih Gantung (Lanjut Main)**, kartu Joker dapat langsung disatukan ke rangkaian kartu di meja sehingga Anda bebas dari ancaman denda Joker mentah.
 6. **Gusar-Geser Kartu (Drag & Drop):**
    * Geser dan pindahkan posisi kartu di tangan untuk memisahkan kartu jadi dan kartu mentah.
-   * Tombol **`🧹 Susun Kembang`** dan **`🔢 Susun Angka`** tersedia untuk perapian otomatis instan.
+   * Tombol **`🧹 Susun Kembang`** dan **` Susun Angka`** tersedia untuk perapian otomatis instan.
 7. **Pemenang Ronde Mulai Duluan:**
    * Pada ronde ke-2 dan seterusnya, pemain dengan total skor tertinggi akan otomatis mendapatkan giliran pertama.
 
 ---
 
-## 📁 Struktur File Projek
+##  Struktur File Projek
 
 * [`run_ui.bat`](file:///D:/hilman-game/run_ui.bat) — Shortcut launcher UI untuk Windows.
 * [`server.py`](file:///D:/hilman-game/server.py) — Web server & REST API lokal (tanpa perlu install library tambahan).
