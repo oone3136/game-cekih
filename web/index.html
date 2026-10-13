@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remi Cekih Pos Ronda - Game Kartu 4 Pemain</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="skin-table-wood skin-card-batik fx-petasan">
+
+  <!-- TOP HEADER BAR -->
+  <header class="top-nav">
+    <div class="brand">
+      <span class="game-logo">🃏</span>
+      <div class="brand-text">
+        <h1>REMI CEKIH</h1>
+        <span class="sub-brand">EDISI POS RONDA (4 PEMAIN)</span>
+      </div>
+    </div>
+
+    <div class="game-info-bar">
+      <div class="info-pill" id="round-indicator">Putaran 1</div>
+      <div class="info-pill" id="deck-counter">Kocokan: 23 kartu</div>
+      <div class="info-pill wild-pill" id="wild-indicator">★ JOKER: ...</div>
+      <button class="info-pill mode-pill" id="btn-toggle-joker-mode" title="Klik untuk berganti mode: Joker Gantung vs Joker Asli">🔀 Mode: <strong id="mode-joker-label">Joker Gantung (3 Aktif, 1 Mati)</strong></button>
+    </div>
+
+    <div class="nav-actions">
+      <button class="btn-shop" id="btn-open-shop">🛒 Toko Skin Meja & Kartu</button>
+      <button class="btn-rules-highlight" id="btn-rules">📜 Aturan Main</button>
+      <button class="btn-secondary" id="btn-new-round">🔄 Ronde Baru</button>
+    </div>
+  </header>
+
+  <!-- MAIN GAME BOARD -->
+  <main class="game-container">
+    <div class="poker-table" id="poker-table">
+      
+      <!-- BOT SEAT 1: PAK RW (TOP LEFT) -->
+      <div class="seat seat-bot" id="seat-player-2">
+        <div class="avatar-wrapper">
+          <div class="avatar">👨‍🦳</div>
+          <div class="turn-halo"></div>
+        </div>
+        <div class="player-meta">
+          <div class="player-name">Pak RW</div>
+          <div class="player-score" id="score-p2">0 pt</div>
+          <div class="card-count-badge" id="count-p2">7 kartu</div>
+          <div class="seat-timer" id="timer-box-p2">⏳ <span id="timer-val-p2">30</span>s</div>
+          <div class="seat-open-melds" id="open-melds-p2"></div>
+        </div>
+        <div class="speech-bubble" id="bubble-p2">Siap ngeronda!</div>
+      </div>
+
+      <!-- BOT SEAT 2: PAK RT (TOP CENTER) -->
+      <div class="seat seat-bot" id="seat-player-1">
+        <div class="avatar-wrapper">
+          <div class="avatar">👨‍💼</div>
+          <div class="turn-halo"></div>
+        </div>
+        <div class="player-meta">
+          <div class="player-name">Pak RT</div>
+          <div class="player-score" id="score-p1">0 pt</div>
+          <div class="card-count-badge" id="count-p1">7 kartu</div>
+          <div class="seat-timer" id="timer-box-p1">⏳ <span id="timer-val-p1">30</span>s</div>
+          <div class="seat-open-melds" id="open-melds-p1"></div>
+        </div>
+        <div class="speech-bubble" id="bubble-p1">Awas ke-cekih ya!</div>
+      </div>
+
+      <!-- BOT SEAT 3: PAK SUKARDI (TOP RIGHT) -->
+      <div class="seat seat-bot" id="seat-player-3">
+        <div class="avatar-wrapper">
+          <div class="avatar">🧔</div>
+          <div class="turn-halo"></div>
+        </div>
+        <div class="player-meta">
+          <div class="player-name">Pak Sukardi</div>
+          <div class="player-score" id="score-p3">0 pt</div>
+          <div class="card-count-badge" id="count-p3">7 kartu</div>
+          <div class="seat-timer" id="timer-box-p3">⏳ <span id="timer-val-p3">30</span>s</div>
+          <div class="seat-open-melds" id="open-melds-p3"></div>
+        </div>
+        <div class="speech-bubble" id="bubble-p3">Nyerok dulu ah!</div>
+      </div>
+
+      <!-- CENTER TABLE: KOCOKAN & DISCARD PILE -->
+      <div class="table-center">
+        
+        <!-- DECK / KOCOKAN TERTUTUP -->
+        <div class="deck-area">
+          <div class="deck-stack" id="deck-clickable" title="Klik untuk tarik kartu dari kocokan">
+            <div class="card card-back card-stacked-3"></div>
+            <div class="card card-back card-stacked-2"></div>
+            <div class="card card-back card-stacked-1">
+              <div class="deck-inner-pattern"></div>
+            </div>
+          </div>
+          <button class="btn-action-primary btn-draw" id="btn-draw-deck">📥 Tarik Kocokan</button>
+        </div>
+
+        <!-- TUMPUKAN BUANGAN (DISCARD PILE SPREAD) -->
+        <div class="discard-spread-container">
+          <div class="discard-header">
+            <span>🗑️ KARTU BUANGAN (Urutan 1 = Terbaru):</span>
+            <span class="depth-info">Batas Serok: Maks. 7 Kartu</span>
+          </div>
+          <div class="discard-scroll" id="discard-pile-row">
+            <!-- Kartu buangan di-generate dinamis di sini -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ANNOUNCER BANNER -->
+      <div class="action-banner" id="action-banner">
+        Memulai permainan...
+      </div>
+
+      <!-- BOTTOM AREA: HUMAN PLAYER -->
+      <div class="seat seat-human" id="seat-player-0">
+        <div class="human-header">
+          <div class="human-info">
+            <div class="avatar-human">😎</div>
+            <div>
+              <span class="human-name">Kamu</span>
+              <span class="human-score" id="score-p0">Skor: 0 pt</span>
+            </div>
+            <!-- TIMER COUNTDOWN HUMAN (30 DETIK PER FASE) -->
+            <div class="human-timer-box" id="human-timer-box">
+              <div class="timer-text">⏳ <span id="timer-step-label">Ambil</span>: <span id="timer-val-p0">30</span>s</div>
+              <div class="timer-track">
+                <div class="timer-progress" id="timer-progress-p0"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="human-controls">
+            <button class="btn-action-util" id="btn-sort-suit" title="Urutkan kartu berdasarkan kembang">🧹 Susun Kembang</button>
+            <button class="btn-action-util" id="btn-sort-rank" title="Urutkan kartu berdasarkan angka">🔢 Susun Angka</button>
+            <button class="btn-action-taunt" id="btn-taunt-cekih" title="Gertak Pak Sukardi (pemain sebelum Anda) bahwa Anda sudah Cekih!">🚨 Gertak Cekih!</button>
+            <button class="btn-action-primary" id="btn-scoop" disabled>⚡ Serok Buangan</button>
+            <button class="btn-action-secondary" id="btn-discard" disabled>🗑️ Buang Kartu</button>
+            <button class="btn-action-tutup" id="btn-tutup-ready" style="display: none;">🎉 TUTUP / CEKIH!</button>
+          </div>
+        </div>
+
+        <!-- KARTU JADI TERBUKA DI MEJA (HASIL SEROK / TARIK BUANGAN) -->
+        <div class="open-melds-wrapper" id="human-open-melds-box" style="display: none;">
+          <span class="open-melds-title">🎴 Kartu Terbuka di Meja (Sudah Jadi):</span>
+          <div class="open-melds-row" id="human-open-melds-row"></div>
+        </div>
+
+        <div class="drag-hint">
+          🖐️ <em>Geser & seret kartu (drag & drop) untuk memisahkan kartu yang sudah jadi dan yang belum!</em>
+        </div>
+
+        <!-- KARTU DI TANGAN PEMAIN -->
+        <div class="human-hand-container">
+          <div class="hand-cards-row" id="human-hand-cards">
+            <!-- Kartu tangan di-render di sini -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ELEMEN TERBANG LEMPARAN GERTAK -->
+  <div id="flying-projectile" class="flying-projectile">🪨</div>
+
+  <!-- MODAL TUTUP / CEKIH SEKARANG VS GANTUNG -->
+  <div class="modal-overlay" id="modal-tutup">
+    <div class="modal-card modal-tutup-content">
+      <div class="modal-header">
+        <h2>🎉 KARTU ANDA BISA TUTUP / CEKIH! 🎉</h2>
+      </div>
+      <div class="modal-body">
+        <p class="tutup-intro">Kombinasi kartu Anda sudah lengkap semua! Anda bisa memilih untuk mengunci kemenangan sekarang atau melakukan <strong>Cekih Gantung</strong>.</p>
+        
+        <div class="tutup-options-list" id="tutup-options-container">
+          <!-- Opsi tutupan di-render di sini -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-gold-big" id="btn-confirm-tutup">🏆 TUTUP SEKARANG!</button>
+        <button class="btn-secondary-big" id="btn-confirm-gantung">🎲 CEKIH GANTUNG (Lanjut Main)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL TOKO SKIN (CUSTOM MEJA, KARTU, ANIMASI & GERTAK) -->
+  <div class="modal-overlay" id="modal-shop">
+    <div class="modal-card modal-shop-content">
+      <div class="modal-header">
+        <h2>🛒 TOKO & KUSTOMISASI SKIN</h2>
+        <button class="btn-close" id="btn-close-shop">&times;</button>
+      </div>
+      <div class="shop-tabs">
+        <button class="shop-tab active" data-tab="tab-table">🎨 Latar Meja</button>
+        <button class="shop-tab" data-tab="tab-card">🎴 Skin Kartu</button>
+        <button class="shop-tab" data-tab="tab-fx">🎆 Efek Menang</button>
+        <button class="shop-tab" data-tab="tab-taunt">🎯 Lempar Gertak</button>
+      </div>
+      <div class="modal-body shop-body">
+        
+        <!-- TAB MEJA -->
+        <div class="tab-pane active" id="tab-table">
+          <p class="tab-desc">Pilih tema latar belakang meja ronda / kasino kesukaan Anda:</p>
+          <div class="skin-grid" id="skin-grid-tables"></div>
+        </div>
+
+        <!-- TAB KARTU -->
+        <div class="tab-pane" id="tab-card">
+          <p class="tab-desc">Pilih desain punggung kartu (Card Back) yang tampil di meja dan tangan:</p>
+          <div class="skin-grid" id="skin-grid-cards"></div>
+        </div>
+
+        <!-- TAB EFEK ANIMASI -->
+        <div class="tab-pane" id="tab-fx">
+          <p class="tab-desc">Pilih efek visual saat Anda berteriak TUTUP / CEKIH:</p>
+          <div class="skin-grid" id="skin-grid-fx"></div>
+        </div>
+
+        <!-- TAB LEMPAR GERTAK CEKIH -->
+        <div class="tab-pane" id="tab-taunt">
+          <p class="tab-desc">Pilih jenis lemparan interaktif saat Anda menekan tombol <strong>🚨 Gertak Cekih</strong>:</p>
+          <div class="skin-grid" id="skin-grid-taunt"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL HASIL RONDE (ROUND SCORE RECAP) -->
+  <div class="modal-overlay" id="modal-round-result">
+    <div class="modal-card modal-result-content">
+      <div class="modal-header">
+        <h2 id="result-title">🏆 HASIL PERTANDINGAN RONDE 🏆</h2>
+      </div>
+      <div class="modal-body">
+        <div class="result-details-box" id="result-details-list"></div>
+        
+        <h3 class="scoreboard-title">📊 KLASEMEN TOTAL SKOR:</h3>
+        <table class="scoreboard-table">
+          <thead>
+            <tr>
+              <th>Peringkat</th>
+              <th>Nama Pemain</th>
+              <th>Skor Ronde Ini</th>
+              <th>Total Skor</th>
+            </tr>
+          </thead>
+          <tbody id="scoreboard-body"></tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-gold-big" id="btn-next-round">▶️ Lanjut Ronde Berikutnya</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL ATURAN PERMAINAN -->
+  <div class="modal-overlay" id="modal-rules">
+    <div class="modal-card modal-rules-content">
+      <div class="modal-header">
+        <h2>📜 ATURAN REMI CEKIH POS RONDA</h2>
+        <button class="btn-close" id="btn-close-rules">&times;</button>
+      </div>
+      <div class="modal-body rules-body">
+        <div class="rules-alert-banner">
+          ⚠️ <strong>ATURAN UTAMA:</strong> Jika ingin mengambil <strong>TRIS</strong> (misal Q-Q-Q), Anda <strong>WAJIB</strong> sudah memiliki minimal 1 rangkaian <strong>SERI</strong> terlebih dahulu (baik terbuka di meja atau tersusun di tangan)!
+        </div>
+
+        <div class="rules-section">
+          <h3>🃏 1. Dua Varian Mode Joker</h3>
+          <ul>
+            <li><strong>Mode Joker Gantung (Default):</strong> 1 kartu pertama dari kocokan dibuka di awal ronde untuk menentukan rank Joker. Kartu pembuka ini adalah <strong>Kartu Mati</strong> (dilarang diserok). Tersisa tepat <strong>3 kartu aktif</strong> di permainan yang berfungsi sebagai Joker liar.</li>
+            <li><strong>Mode Joker Asli:</strong> Menggunakan <strong>2 kartu Joker fisik</strong> asli (Hitam & Merah) standar dek internasional.</li>
+          </ul>
+        </div>
+
+        <div class="rules-section">
+          <h3>👑 2. Batasan Tris (Set) vs Seri (Run)</h3>
+          <ul>
+            <li><strong>Hanya Kartu Raja yang Boleh Tris:</strong> Hanya kartu J, Q, K, dan As yang diizinkan membentuk Tris.</li>
+            <li><strong>Kartu Anak Wajib Seri:</strong> Angka 2 s/d 10 dilarang dibentuk Tris; wajib disusun berurutan satu kembang (Seri).</li>
+            <li><strong>Syarat Ambil Tris:</strong> Dilarang langsung menyerok Tris jika belum memiliki minimal 1 Seri sah (di meja hasil serokan sebelumnya atau sudah terangkai di tangan).</li>
+          </ul>
+        </div>
+
+        <div class="rules-section">
+          <h3>⚡ 3. Sistem Serok Buangan Fleksibel</h3>
+          <ul>
+            <li><strong>Jangkauan Maksimal:</strong> 7 kartu ke belakang dari tumpukan buangan terbaru.</li>
+            <li><strong>Panjang Rangkaian Bebas:</strong> Anda dapat mengeluarkan 2, 3, 4, 5+ kartu dari tangan untuk disambungkan (panjang 3 s/d 7 kartu).</li>
+            <li><strong>Kartu Terbuka di Meja:</strong> Kartu hasil serokan buangan ditaruh terbuka di meja di depan pemain. Sisa kartu buangan di atasnya masuk ke tangan.</li>
+          </ul>
+        </div>
+
+        <div class="rules-section">
+          <h3>🎲 4. Cekih Gantung & Penyatuan Joker</h3>
+          <ul>
+            <li>Jika kartu sudah lengkap semua, Anda bisa memilih <strong>Tutup Sekarang</strong> atau <strong>Cekih Gantung (Lanjut Main)</strong>.</li>
+            <li>Saat Cekih Gantung, kartu Joker dapat disatukan ke rangkaian meja sehingga <strong>aman dari denda Joker mentah (-250 poin)</strong>.</li>
+          </ul>
+        </div>
+
+        <div class="rules-section">
+          <h3>⏳ 5. Timer Dua Fase & Proteksi Auto-Buang</h3>
+          <ul>
+            <li><strong>Fase 1:</strong> 30 detik untuk mengambil kartu (tarik kocokan atau serok buangan).</li>
+            <li><strong>Fase 2:</strong> 30 detik baru untuk memilih kartu buang.</li>
+            <li>Jika waktu buang habis, kartu teraman dibuang otomatis dan <strong>kartu Joker dilarang dibuang</strong>.</li>
+          </ul>
+        </div>
+
+        <div class="rules-section">
+          <h3>🏆 6. Pemenang Ronde & Poin</h3>
+          <ul>
+            <li><strong>Pemenang Ronde Mulai Duluan:</strong> Pemain dengan total skor tertinggi memulai putaran pertama pada ronde berikutnya.</li>
+            <li><strong>Tutup Kocokan:</strong> Pemenang +200 poin (pemain lain 0).</li>
+            <li><strong>Tutup Cekihan:</strong> Kartu Anak +50, Kartu Raja +100, Kartu As +150 (pembuang kartu kena denda minus sebesar nilai tutupan).</li>
+            <li><strong>Denda Kartu Mentah:</strong> Anak -5, Raja -10, As -15, dan <strong>Joker Mentah -250</strong>.</li>
+            <li><strong>Kocokan Habis:</strong> Cuci Tangan (semua pemain mendapatkan 0 poin).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOUND SYNTHESIZER & ANIMATION CANVAS -->
+  <canvas id="fx-canvas"></canvas>
+
+  <script src="game_ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{
+  "coins": 2035,
+  "last_login_date": "2026-10-13",
+  "daily_login_claimed_date": "2026-10-13",
+  "unlocked_skins": [
+    "pos_ronda_wood",
+    "batik_ronda",
+    "petasan_ronda",
+    "batu_ronda",
+    "sandal_jepit",
+    "tos_gelas",
+    "siram_air"
+  ],
+  "quests": {
+    "win_round": {
+      "id": "win_round",
+      "title": "Juara Ronda",
+      "desc": "Menangkan 1 ronde pertandingan",
+      "progress": 1,
+      "target": 1,
+      "reward": 20,
+      "claimed": false
+    },
+    "scoop_discard": {
+      "id": "scoop_discard",
+      "title": "Tukang Serok",
+      "desc": "Serok kartu buangan di meja",
+      "progress": 2,
+      "target": 2,
+      "reward": 15,
+      "claimed": false
+    },
+    "send_emotes": {
+      "id": "send_emotes",
+      "title": "Usil di Meja",
+      "desc": "Kirim lemparan/emot ke pemain lain",
+      "progress": 3,
+      "target": 3,
+      "reward": 10,
+      "claimed": false
+    },
+    "play_rounds": {
+      "id": "play_rounds",
+      "title": "Nongkrong Santai",
+      "desc": "Mainkan ronde pertandingan",
+      "progress": 3,
+      "target": 3,
+      "reward": 15,
+      "claimed": false
+    }
+  }
+}
